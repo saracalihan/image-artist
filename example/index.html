@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Page Title</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <script>
+        function click(e) {
+            console.log({ clicked: e });
+        }
+        function mouseEnter(e) {
+            console.log({ mouseEnter: e });
+        }
+        function mouseLeave(e) {
+            console.log({ mouseLeave: e });
+        }
+        function mouseMove(e) {
+            console.log({ mouseMove: e });
+        }
+        function mouseEnter(e) {
+            console.log({ mouseEnter: e });
+        }
+        function mouseEnter(e) {
+            console.log({ mouseEnter: e });
+        }
+
+    </script>
+    <image-marker id="marker" data-src="https://t3.ftcdn.net/jpg/05/40/73/36/360_F_540733627_4EL593urNnDytfscMkoRMddzqsIoKNHC.jpg" data-width="400"
+        data-height="300" data-onClick="click" data-onmousemovse="mouseMove" data-onMouseEnter="mouseEnter"
+        data-onMouseLeave="mouseLeave"></image-marker>
+    <script src="../dist/script.js"></script>
+    <script>
+        let marks = [
+            {
+                id: "fr",
+                title: {
+                    font: "sans",
+                    text: "alihan",
+                    size: "10px",
+                    color: "white"
+                },
+                shape: "rect",
+                coords: [100, 10, 80, 90],
+                borderColor: "blue",
+                fillColor: 'green',
+                lineWidth: 5,
+                events: {
+                    onClick: 0,
+                    onMouseEnter: 0,
+                    onMouseLeave: 0,
+                }
+            },
+            {
+                id: "r",
+                title: "optional",
+                shape: "rect",
+                coords: [200, 50, 180, 90],
+            },
+            {
+                id: "l",
+                title: "optional",
+                shape: "line",
+                lineWidth: 10,
+                coords: [50, 50, 100, 120],
+            },
+            {
+                id: "c",
+                title: "optional",
+                shape: "circle",
+                radius: 30,
+                coords: [40, 150],
+            },
+            {
+                id: "a",
+                title: "optional",
+                shape: "arc",
+                startAngle: .5,
+                endAngle: 5,
+                radius: 20,
+                coords: [150, 150],
+            },
+            {
+                id: "t",
+                title: "optional",
+                shape: "triangle",
+                coords: [200,165,250,150,300,180],
+            },
+            {
+                id: "p",
+                title: "optional",
+                shape: "polygone",
+                borderColor: "black",
+                coords: [150,250,150,200,250,250,250,200, 200, 200, 180,180],
+            }
+        ];
+        marker.draw(marks);
+    </script>
+</body>
+
+</html>

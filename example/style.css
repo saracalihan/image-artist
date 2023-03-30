@@ -1,0 +1,11 @@
+image-marker #image-marker-wrapper {
+    border: 10px solid red;
+    position: relative;
+    right: 0px;
+    z-index: 100;
+}
+
+image-marker #image-marker-image {
+    border: 1px solid green;
+    z-index: 1;
+}
