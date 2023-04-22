@@ -3,11 +3,13 @@
 
 <head>
     <title>Page Title</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
     <script>
+        let draw = false;
+        let points = [];
         function click(e) {
             console.log({ clicked: e });
         }
@@ -16,66 +18,87 @@
         }
         function mouseLeave(e) {
             console.log({ mouseLeave: e });
+            // marker.clearAll()
         }
         function mouseMove(e) {
-            console.log({ mouseMove: e });
+            //console.log({ mouseMove: e });
+            if (draw) {
+                if (marker.marks.length === 0) {
+                    marker.marks.push({ coords: [0, 0, e.x, e.y] })
+                }
+
+                let last = marker.marks.slice(-1)[0].coords;
+                console.log(last);
+                marker.draw({
+                    id: Date.now(),
+                    shape: 'line',
+                    coords: [last[2], last[3], e.x - 8, e.y + 3],
+                })
+            }
         }
-        function mouseEnter(e) {
-            console.log({ mouseEnter: e });
+        function mouseDown(e) {
+            draw = true;
+            console.log({ down: e });
+        }
+        function mouseUp(e) {
+            draw = false;
+            console.log({ down: e });
         }
         function mouseEnter(e) {
             console.log({ mouseEnter: e });
         }
 
     </script>
-    <image-marker id="marker" data-src="https://t3.ftcdn.net/jpg/05/40/73/36/360_F_540733627_4EL593urNnDytfscMkoRMddzqsIoKNHC.jpg" data-width="400"
-        data-height="300" data-onClick="click" data-onmousemovse="mouseMove" data-onMouseEnter="mouseEnter"
-        data-onMouseLeave="mouseLeave"></image-marker>
+    <image-artist id="marker"
+        data-src="https://d1z0xtmfw63f9i.cloudfront.net/cula4/wp-content/uploads/2021/07/Spongebob2.jpg"
+        data-width="400" data-height="300" data-onClick="click" data-onmousemove="mouseMove"
+        data-onMouseEnter="mouseEnter" data-onMouseDown="mouseDown" data-onMouseUp="mouseUp"
+        data-onMouseLeave="mouseLeave" data-title="alihan"/>
     <script src="../dist/script.js"></script>
     <script>
         let marks = [
             {
                 id: "fr",
-                title: {
+                title: "Filled rect",/* {
                     font: "sans",
                     text: "alihan",
                     size: "10px",
                     color: "white"
-                },
+                }, */
                 shape: "rect",
                 coords: [100, 10, 80, 90],
                 borderColor: "blue",
                 fillColor: 'green',
                 lineWidth: 5,
-                events: {
-                    onClick: 0,
-                    onMouseEnter: 0,
-                    onMouseLeave: 0,
-                }
             },
             {
                 id: "r",
-                title: "optional",
+                title: "Rectangle",
                 shape: "rect",
                 coords: [200, 50, 180, 90],
+                events: {
+                    onMouseLeave(){console.log('tıklandı')}
+                }
             },
             {
                 id: "l",
-                title: "optional",
+                title: "Line",
                 shape: "line",
+                fillColor: 'pink',
                 lineWidth: 10,
                 coords: [50, 50, 100, 120],
             },
             {
                 id: "c",
-                title: "optional",
+                title: "Circle",
+                borderColor: 'navy',
                 shape: "circle",
                 radius: 30,
                 coords: [40, 150],
             },
             {
                 id: "a",
-                title: "optional",
+                title: "Arc",
                 shape: "arc",
                 startAngle: .5,
                 endAngle: 5,
@@ -84,19 +107,72 @@
             },
             {
                 id: "t",
-                title: "optional",
+                title: "Triangle",
                 shape: "triangle",
-                coords: [200,165,250,150,300,180],
+                borderColor: 'yellow',
+                coords: [300, 165, 350, 150, 280, 280],
             },
             {
                 id: "p",
-                title: "optional",
+                title: "Polygone",
                 shape: "polygone",
-                borderColor: "black",
-                coords: [150,250,150,200,250,250,250,200, 200, 200, 180,180],
+                borderColor: "red",
+                coords: [150, 250, 150, 200, 250, 250, 250, 200, 200, 200, 180, 180],
             }
         ];
-        marker.draw(marks);
+        marker.drawText({ text: 'alihan deneme', x: 200, y: 200, size: 40 })
+
+        for(let i =0; i< 300; i+=20){
+            marker.draw({
+                id: 'l' + '-' + i,
+                shape: "line",
+                fillColor: 'black',
+                lineWidth: 1,
+                coords: [0, i, 400, i],
+            })
+            marker.drawText({
+                text: i,
+                x:0,
+                color: 'red',
+                y: i+5
+            })
+        }
+
+        for(let i =0; i< 400; i+=20){
+            marker.draw({
+                id: 'r' + '-' + i,
+                shape: "line",
+                fillColor: 'black',
+                lineWidth: 1,
+                coords: [i, 0, i, 400],
+            })
+            marker.drawText({
+                text: i,
+                color: 'red',
+                x:i-6,
+                y: 10
+            })
+        }
+
+        marker.drawArray(marks);
+        marker.removeLabel('fr');
+        marker.setHtmlLabel('fr',(x,y) => {
+            let a = document.createElement('div');
+            a.innerText = `x: ${x}, y: ${y}:`;
+            a.style.top= y+'px';
+            a.style.left= x+'px';
+            a.style.position = 'absolute';
+            return a;
+        } )
+        // marker.setLabel('fr', 'F rectangle');
+        // marker.setLabel('r', 'rectangle');
+        // marker.setLabel('l', 'Line');
+        // marker.setLabel('a', 'Arch');
+        // marker.setLabel('c', 'Crcyle');
+        // marker.setLabel('t', 'Triangle');
+        // marker.setLabel('p', 'Polygone');
+
+       // })
     </script>
 </body>
 
